@@ -1,0 +1,22 @@
+name: Agentmemory
+version: "0.9.27"
+slug: agentmemory
+description: Общая память агентов (iii-движок + agentmemory), одна на все машины
+arch:
+  - amd64
+  - aarch64
+startup: services
+boot: auto
+ports:
+  3111/tcp: 3111
+  3112/tcp: 3112
+ports_description:
+  3111/tcp: HTTP API — сюда смотрит AGENTMEMORY_URL на клиентах
+  3112/tcp: поток событий (stream)
+# HOME=/data: CLI кладёт туда скачанный бинарь iii и свой .env, а состояние
+# пишется по абсолютным путям из iii-config.docker.yaml (/data/state_store.db).
+environment:
+  HOME: /data
+# Health-эндпоинта у сервиса нет (любой путь отдаёт 404), поэтому проверяем
+# живость самим портом, а не HTTP-ответом.
+watchdog: "tcp://[HOST]:[PORT:3111]"
