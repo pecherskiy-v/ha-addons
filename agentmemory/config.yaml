@@ -1,5 +1,5 @@
 name: Agentmemory
-version: "0.9.27"
+version: "0.9.27-1"
 slug: agentmemory
 description: Общая память агентов (iii-движок + agentmemory), одна на все машины
 url: https://github.com/pecherskiy-v/ha-addons/tree/main/agentmemory
@@ -7,6 +7,10 @@ arch:
   - amd64
   - aarch64
 startup: services
+# init: false обязателен для базовых образов Home Assistant: в них s6-overlay v3,
+# а он работает только как PID 1. При init: true Docker подставляет свой init
+# первым процессом, и s6 падает с "s6-overlay-suexec: fatal: can only run as pid 1".
+init: false
 boot: auto
 ports:
   3111/tcp: 3111
