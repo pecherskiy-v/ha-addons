@@ -1,5 +1,8 @@
 name: Agentmemory
-version: "0.9.27-1"
+# Версия дополнения своя, не равна версии npm-пакета: та задаётся аргументом
+# AGENTMEMORY_VERSION в Dockerfile. Суффиксы вида 0.9.27-1 использовать нельзя —
+# Home Assistant считает их пре-релизом, то есть СТАРШЕ базовой версии не будет.
+version: "1.0.0"
 slug: agentmemory
 description: Общая память агентов (iii-движок + agentmemory), одна на все машины
 url: https://github.com/pecherskiy-v/ha-addons/tree/main/agentmemory
