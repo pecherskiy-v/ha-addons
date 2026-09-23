@@ -2,6 +2,7 @@ name: Qdrant
 version: "v1.19.1"
 slug: qdrant
 description: Векторная база для семантического поиска агентов (общая на все машины)
+url: https://github.com/pecherskiy-v/ha-addons/tree/main/qdrant
 arch:
   - amd64
   - aarch64

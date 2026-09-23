@@ -2,6 +2,7 @@ name: Agentmemory
 version: "0.9.27"
 slug: agentmemory
 description: Общая память агентов (iii-движок + agentmemory), одна на все машины
+url: https://github.com/pecherskiy-v/ha-addons/tree/main/agentmemory
 arch:
   - amd64
   - aarch64
