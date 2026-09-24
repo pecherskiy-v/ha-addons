@@ -79,6 +79,19 @@ export REQUIRE_AUTHENTICATION="False"
 export LITELLM_LOG="$(opt log_level)"
 export TOKENIZERS_PARALLELISM="false"
 
+# Графовый движок при первом обращении тянет расширение json из сети. Внутри
+# запроса он не успевает (загрузка ~30с) и миграции падают — ставим заранее,
+# один раз; кеш остаётся в /data.
+if [ ! -f /data/.ladybug-json-installed ]; then
+  bashio::log.info "Ставлю расширение json для графового движка (разовая загрузка)…"
+  if python -c "from cognee_db_workers._kuzu_helpers import install_json_extension_local; install_json_extension_local()" 2>/dev/null; then
+    touch /data/.ladybug-json-installed
+    bashio::log.info "Расширение установлено"
+  else
+    bashio::log.warning "Расширение установить не удалось — миграции графа будут падать"
+  fi
+fi
+
 bashio::log.info "Cognee: база ${DB_NAME}@${DB_HOST}:${DB_PORT}, вектора в pgvector"
 bashio::log.info "Модели: ${LLM_MODEL} через ${LLM_ENDPOINT}, эмбеддинги ${EMBEDDING_MODEL}"
 
