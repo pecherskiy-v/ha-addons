@@ -31,6 +31,13 @@ if [ -z "$DB_PASSWORD" ]; then
 fi
 export DB_PASSWORD
 export VECTOR_DB_PROVIDER="pgvector"
+# При включённом контроле доступа адаптер pgvector требует собственные
+# реквизиты и не наследует реляционные — передаём те же значения явно.
+export VECTOR_DB_HOST="$DB_HOST"
+export VECTOR_DB_PORT="$DB_PORT"
+export VECTOR_DB_NAME="$DB_NAME"
+export VECTOR_DB_USERNAME="$DB_USERNAME"
+export VECTOR_DB_PASSWORD="$DB_PASSWORD"
 # граф — встроенный kuzu, файлы рядом с остальными данными
 export GRAPH_DATABASE_PROVIDER="kuzu"
 # Кеши и конфиги пишем в /data — единственный каталог, переживающий обновление.
