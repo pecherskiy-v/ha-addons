@@ -20,8 +20,8 @@ RUN apt-get update \
 COPY vendor/libjson.lbug_extension /opt/ext/libjson.lbug_extension
 COPY install-ext.py /tmp/install-ext.py
 RUN set -eu; \
-    for D in /data-seed/.ladybug/extension/v0.19.0/linux_amd64/json \
-             /data-seed/.kuzu/extension/v0.19.0/linux_amd64/json; do \
+    for D in /data-seed/.lbdb/extension/v0.19.0/linux_amd64/json \
+             /data-seed/.lbdb/extension/0.19.0/linux_amd64/json; do \
       mkdir -p "$D"; \
       cp /opt/ext/libjson.lbug_extension "$D/libjson.lbug_extension"; \
       cp /opt/ext/libjson.lbug_extension "$D/libjson.kuzu_extension"; \
