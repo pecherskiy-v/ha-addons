@@ -1,5 +1,5 @@
 name: Cognee
-version: "1.0.7"
+version: "1.0.8"
 slug: cognee
 description: Память агентов на графе знаний (Cognee MCP), общая для всех машин
 url: https://github.com/topoteretes/cognee

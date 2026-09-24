@@ -83,12 +83,15 @@ export TOKENIZERS_PARALLELISM="false"
 # запроса он не успевает (загрузка ~30с) и миграции падают — ставим заранее,
 # один раз; кеш остаётся в /data.
 if [ ! -f /data/.ladybug-json-installed ]; then
-  bashio::log.info "Ставлю расширение json для графового движка (разовая загрузка)…"
-  if python -c "from cognee_db_workers._kuzu_helpers import install_json_extension_local; install_json_extension_local()" 2>/dev/null; then
+  if [ -d /data-seed ]; then
+    cp -rn /data-seed/. "$HOME"/ 2>/dev/null || true
+    bashio::log.info "Кеш расширений разложен из образа"
+  fi
+  if python -c "from cognee_db_workers._kuzu_helpers import install_json_extension_local; install_json_extension_local()"; then
     touch /data/.ladybug-json-installed
-    bashio::log.info "Расширение установлено"
+    bashio::log.info "Расширение json готово"
   else
-    bashio::log.warning "Расширение установить не удалось — миграции графа будут падать"
+    bashio::log.warning "Расширение json поставить не удалось — миграции графа будут падать"
   fi
 fi
 

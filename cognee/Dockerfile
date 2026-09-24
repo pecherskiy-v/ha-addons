@@ -11,6 +11,13 @@ RUN apt-get update \
  && ln -s /usr/lib/bashio/bashio /usr/bin/bashio \
  && rm -rf /tmp/bashio
 
+# Расширение json для графового движка тянется из сети при первом обращении и
+# не укладывается в таймаут запроса. Ставим на сборке, в отдельный HOME,
+# чтобы затем разложить кеш в /data.
+RUN mkdir -p /data-seed \
+ && HOME=/data-seed python -c "from cognee_db_workers._kuzu_helpers import install_json_extension_local; install_json_extension_local()" \
+ && find /data-seed -maxdepth 3 | head -20
+
 COPY run.sh /run.sh
 RUN chmod +x /run.sh
 
