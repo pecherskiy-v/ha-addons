@@ -1,5 +1,5 @@
 name: Cognee
-version: "1.0.11"
+version: "1.0.12"
 slug: cognee
 description: Память агентов на графе знаний (Cognee MCP), общая для всех машин
 url: https://github.com/topoteretes/cognee
@@ -25,7 +25,7 @@ options:
   db_password_from_addon: 4061d8e8_postgres_pgvector
   llm_provider: ollama
   llm_endpoint: http://192.168.1.74:11434
-  llm_model: qwen3:8b
+  llm_model: llama3.1:8b
   llm_api_key: ollama
   embedding_provider: ollama
   embedding_endpoint: http://192.168.1.74:11434/api/embed
