@@ -83,6 +83,9 @@ export TOKENIZERS_PARALLELISM="false"
 # запроса он не успевает (загрузка ~30с) и миграции падают — ставим заранее,
 # один раз; кеш остаётся в /data.
 if [ ! -f /data/.ladybug-json-installed ]; then
+  if [ -f /opt/ext-install.log ]; then
+    cp /opt/ext-install.log /data/ext-install.log 2>/dev/null || true
+  fi
   if [ -d /data-seed ]; then
     cp -rn /data-seed/. "$HOME"/ 2>/dev/null || true
     bashio::log.info "Кеш расширений разложен из образа"
