@@ -14,4 +14,7 @@ RUN apt-get update \
 COPY run.sh /run.sh
 RUN chmod +x /run.sh
 
+# У базового образа свой ENTRYPOINT (/app/entrypoint.sh). Без сброса супервизор
+# запустил бы «entrypoint.sh /run.sh», и наш скрипт ушёл бы в аргументы.
+ENTRYPOINT []
 CMD ["/run.sh"]

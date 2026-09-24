@@ -17,6 +17,8 @@ export DB_PASSWORD="$(opt db_password)"
 export VECTOR_DB_PROVIDER="pgvector"
 # граф — встроенный kuzu, файлы рядом с остальными данными
 export GRAPH_DATABASE_PROVIDER="kuzu"
+# Кеши и конфиги пишем в /data — единственный каталог, переживающий обновление.
+export HOME="/data"
 export DATA_ROOT_DIRECTORY="/data/cognee_data"
 export SYSTEM_ROOT_DIRECTORY="/data/cognee_system"
 mkdir -p "$DATA_ROOT_DIRECTORY" "$SYSTEM_ROOT_DIRECTORY"
