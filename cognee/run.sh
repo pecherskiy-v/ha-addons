@@ -64,6 +64,17 @@ if [ "$(opt allowed_hosts)" = "*" ]; then
   # доверенная локальная сеть: защита от DNS-rebinding мешает клиентам с других машин
   export MCP_DISABLE_DNS_REBINDING_PROTECTION="true"
 fi
+# Мультитенантный режим Cognee заводит ОТДЕЛЬНУЮ базу на каждый датасет
+# (CREATE DATABASE "<uuid>") — для этого нужен ha_user с правом CREATEDB.
+# Для одного владельца это лишнее: держим всё в одной базе, которая уже
+# попадает в бэкап аддона Postgres.
+if bashio::config.true 'dataset_isolation'; then
+  export ENABLE_BACKEND_ACCESS_CONTROL="True"
+  bashio::log.info "Изоляция датасетов включена — БД должна позволять CREATE DATABASE"
+else
+  export ENABLE_BACKEND_ACCESS_CONTROL="False"
+  bashio::log.info "Все датасеты в одной базе ${DB_NAME}"
+fi
 export REQUIRE_AUTHENTICATION="False"
 export LITELLM_LOG="$(opt log_level)"
 export TOKENIZERS_PARALLELISM="false"

@@ -28,6 +28,7 @@ PostgreSQL с pgvector, так что второго векторного дви
 | `db_password_from_addon` | `4061d8e8_postgres_pgvector` | у какого аддона спросить пароль |
 | `llm_provider` / `llm_endpoint` / `llm_model` | `ollama` / `http://192.168.1.74:11434` / `ollama_chat/qwen2.5:7b` | модель для извлечения фактов |
 | `embedding_provider` / `embedding_model` / `embedding_dimensions` | `ollama` / `ollama/nomic-embed-text` / `768` | эмбеддинги |
+| `dataset_isolation` | `false` | отдельная база на датасет; требует у пользователя БД права CREATE DATABASE |
 | `allowed_hosts` | `*` | какие Host-заголовки принимать; `*` = доверенная локальная сеть |
 | `log_level` | `ERROR` | подробность логов LiteLLM |
 
