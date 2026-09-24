@@ -51,6 +51,14 @@ export LLM_PROVIDER="$(opt llm_provider)"
 export LLM_ENDPOINT="$(opt llm_endpoint)"
 export LLM_MODEL="$(opt llm_model)"
 export LLM_API_KEY="$(opt llm_api_key)"
+# Слабые локальные модели часто отдают объект там, где схема ждёт строку.
+# instructor переспрашивает модель, показывая ей текст ошибки валидации;
+# ему нужен OpenAI-совместимый адрес (с /v1), в отличие от litellm_native.
+export STRUCTURED_OUTPUT_FRAMEWORK="$(opt structured_output)"
+if [ "$(opt structured_output)" = "instructor" ]; then
+  export LLM_ENDPOINT="${LLM_ENDPOINT%/}/v1"
+  bashio::log.info "structured output: instructor, адрес ${LLM_ENDPOINT}"
+fi
 export EMBEDDING_PROVIDER="$(opt embedding_provider)"
 export EMBEDDING_ENDPOINT="$(opt embedding_endpoint)"
 export EMBEDDING_MODEL="$(opt embedding_model)"
