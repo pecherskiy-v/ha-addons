@@ -2,7 +2,7 @@ name: Agentmemory
 # Версия дополнения своя, не равна версии npm-пакета: та задаётся аргументом
 # AGENTMEMORY_VERSION в Dockerfile. Суффиксы вида 0.9.27-1 использовать нельзя —
 # Home Assistant считает их пре-релизом, то есть СТАРШЕ базовой версии не будет.
-version: "1.0.0"
+version: "1.0.1"
 slug: agentmemory
 description: Общая память агентов (iii-движок + agentmemory), одна на все машины
 url: https://github.com/pecherskiy-v/ha-addons/tree/main/agentmemory
@@ -10,10 +10,8 @@ arch:
   - amd64
   - aarch64
 startup: services
-# init: false обязателен для базовых образов Home Assistant: в них s6-overlay v3,
-# а он работает только как PID 1. При init: true Docker подставляет свой init
-# первым процессом, и s6 падает с "s6-overlay-suexec: fatal: can only run as pid 1".
-init: false
+# init оставлен по умолчанию (true): базовый образ теперь node:bookworm-slim,
+# s6-overlay в нём нет, а init от Docker полезен — собирает зомби-процессы.
 boot: auto
 ports:
   3111/tcp: 3111
