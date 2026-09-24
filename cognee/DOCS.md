@@ -13,8 +13,9 @@ PostgreSQL с pgvector, так что второго векторного дви
 
 1. Аддон **PostgreSQL with pgvector** должен быть запущен. Он создаёт
    пользователя `ha_user`, базу `ha_db` и включает расширение `vector`.
-2. Пароль `ha_user` возьми в конфигурации того аддона (параметр
-   `ha_user_password`) и впиши здесь в `db_password`.
+2. Пароль вводить не нужно: при пустом `db_password` аддон запрашивает его
+   у аддона PostgreSQL через API супервизора. Вписать вручную стоит только
+   если подключаешься к другому серверу БД.
 3. Проверь, что endpoint моделей доступен с машины Home Assistant.
 
 ## Параметры
@@ -23,7 +24,8 @@ PostgreSQL с pgvector, так что второго векторного дви
 |---|---|---|
 | `db_host` | `4061d8e8-postgres-pgvector` | имя хоста аддона Postgres во внутренней сети |
 | `db_port` / `db_name` / `db_user` | `5432` / `ha_db` / `ha_user` | реквизиты базы |
-| `db_password` | — | пароль `ha_user`, обязателен |
+| `db_password` | пусто | пароль `ha_user`; если пусто — берётся из аддона PostgreSQL |
+| `db_password_from_addon` | `4061d8e8_postgres_pgvector` | у какого аддона спросить пароль |
 | `llm_provider` / `llm_endpoint` / `llm_model` | `ollama` / `http://192.168.1.74:11434` / `ollama_chat/qwen2.5:7b` | модель для извлечения фактов |
 | `embedding_provider` / `embedding_model` / `embedding_dimensions` | `ollama` / `ollama/nomic-embed-text` / `768` | эмбеддинги |
 | `allowed_hosts` | `*` | какие Host-заголовки принимать; `*` = доверенная локальная сеть |

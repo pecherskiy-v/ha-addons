@@ -13,7 +13,23 @@ export DB_HOST="$(opt db_host)"
 export DB_PORT="$(opt db_port)"
 export DB_NAME="$(opt db_name)"
 export DB_USERNAME="$(opt db_user)"
-export DB_PASSWORD="$(opt db_password)"
+DB_PASSWORD="$(opt db_password)"
+# Пароль не дублируем: если поле пустое, берём его у аддона PostgreSQL через
+# API супервизора. Источник правды один — конфигурация того аддона.
+if [ -z "$DB_PASSWORD" ]; then
+  SRC="$(opt db_password_from_addon)"
+  if [ -n "$SRC" ] && [ -n "${SUPERVISOR_TOKEN:-}" ]; then
+    DB_PASSWORD="$(curl -sS -H "Authorization: Bearer ${SUPERVISOR_TOKEN}" \
+      "http://supervisor/addons/${SRC}/info" \
+      | jq -r '.data.options.ha_user_password // empty')"
+    if [ -n "$DB_PASSWORD" ]; then
+      bashio::log.info "Пароль получен из аддона ${SRC}"
+    else
+      bashio::log.warning "Не удалось получить пароль из аддона ${SRC}"
+    fi
+  fi
+fi
+export DB_PASSWORD
 export VECTOR_DB_PROVIDER="pgvector"
 # граф — встроенный kuzu, файлы рядом с остальными данными
 export GRAPH_DATABASE_PROVIDER="kuzu"

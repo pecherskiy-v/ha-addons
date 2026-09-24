@@ -1,5 +1,5 @@
 name: Cognee
-version: "1.0.2"
+version: "1.0.3"
 slug: cognee
 description: Память агентов на графе знаний (Cognee MCP), общая для всех машин
 url: https://github.com/topoteretes/cognee
@@ -7,6 +7,8 @@ arch:
   - amd64
   - aarch64
 init: false
+hassio_api: true
+hassio_role: manager
 startup: services
 boot: auto
 ports:
@@ -20,6 +22,7 @@ options:
   db_name: ha_db
   db_user: ha_user
   db_password: ""
+  db_password_from_addon: 4061d8e8_postgres_pgvector
   llm_provider: ollama
   llm_endpoint: http://192.168.1.74:11434
   llm_model: ollama_chat/qwen3:8b
@@ -35,7 +38,8 @@ schema:
   db_port: port
   db_name: str
   db_user: str
-  db_password: password
+  db_password: password?
+  db_password_from_addon: str?
   llm_provider: list(ollama|openai|anthropic|gemini)
   llm_endpoint: str
   llm_model: str
