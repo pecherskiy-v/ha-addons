@@ -31,4 +31,26 @@ if not ok:
             print(f"{mod}: не вышло")
             traceback.print_exc()
 
+if not ok:
+    # Кеш уже разложен из репозитория — пробуем загрузить файл напрямую.
+    import glob
+    for path in glob.glob("/data-seed/.*/extension/*/*/json/libjson.*"):
+        try:
+            import ladybug as m
+            db = m.Database(":memory:")
+            conn = m.Connection(db)
+            conn.execute(f"LOAD EXTENSION '{path}'")
+            print("загрузка файлом:", path)
+            ok = True
+            break
+        except Exception:
+            print("не вышло загрузить", path)
+            traceback.print_exc()
+
+import os
+print("разложенные файлы:")
+for root, _dirs, files in os.walk("/data-seed"):
+    for f in files:
+        print("  ", os.path.join(root, f))
+
 print("ИТОГ:", "установлено" if ok else "НЕ УСТАНОВЛЕНО")

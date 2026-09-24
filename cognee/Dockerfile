@@ -14,8 +14,19 @@ RUN apt-get update \
 # Расширение json для графового движка тянется из сети при первом обращении и
 # не укладывается в таймаут запроса. Ставим на сборке; итог пишем в файл,
 # чтобы причину отказа было видно без журналов супервизора.
+# Сеть машины HA не вытягивает файл с extension.ladybugdb.com (20 КБ из 847 КБ
+# за три минуты), поэтому расширение лежит в репозитории и раскладывается по
+# путям кеша движка.
+COPY vendor/libjson.lbug_extension /opt/ext/libjson.lbug_extension
 COPY install-ext.py /tmp/install-ext.py
-RUN mkdir -p /data-seed && HOME=/data-seed python /tmp/install-ext.py > /opt/ext-install.log 2>&1; \
+RUN set -eu; \
+    for D in /data-seed/.ladybug/extension/v0.19.0/linux_amd64/json \
+             /data-seed/.kuzu/extension/v0.19.0/linux_amd64/json; do \
+      mkdir -p "$D"; \
+      cp /opt/ext/libjson.lbug_extension "$D/libjson.lbug_extension"; \
+      cp /opt/ext/libjson.lbug_extension "$D/libjson.kuzu_extension"; \
+    done; \
+    HOME=/data-seed python /tmp/install-ext.py > /opt/ext-install.log 2>&1 || true; \
     cat /opt/ext-install.log
 
 COPY run.sh /run.sh
