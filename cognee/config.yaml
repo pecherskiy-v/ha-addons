@@ -1,0 +1,48 @@
+name: Cognee
+version: "1.0.0"
+slug: cognee
+description: Память агентов на графе знаний (Cognee MCP), общая для всех машин
+url: https://github.com/topoteretes/cognee
+arch:
+  - amd64
+  - aarch64
+init: false
+startup: services
+boot: auto
+ports:
+  8000/tcp: 8001
+ports_description:
+  8000/tcp: MCP по HTTP для клиентов в локальной сети
+watchdog: "http://[HOST]:[PORT:8000]/health"
+options:
+  db_host: 4061d8e8-postgres-pgvector
+  db_port: 5432
+  db_name: ha_db
+  db_user: ha_user
+  db_password: ""
+  llm_provider: ollama
+  llm_endpoint: http://192.168.1.74:11434
+  llm_model: ollama_chat/qwen2.5:7b
+  llm_api_key: ollama
+  embedding_provider: ollama
+  embedding_endpoint: http://192.168.1.74:11434
+  embedding_model: ollama/nomic-embed-text
+  embedding_dimensions: 768
+  allowed_hosts: "*"
+  log_level: ERROR
+schema:
+  db_host: str
+  db_port: port
+  db_name: str
+  db_user: str
+  db_password: password
+  llm_provider: list(ollama|openai|anthropic|gemini)
+  llm_endpoint: str
+  llm_model: str
+  llm_api_key: password
+  embedding_provider: list(ollama|openai|fastembed)
+  embedding_endpoint: str
+  embedding_model: str
+  embedding_dimensions: int
+  allowed_hosts: str
+  log_level: list(DEBUG|INFO|WARNING|ERROR)
