@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.16
+
+- Сброс таблиц выполняется через asyncpg: psycopg2 в образе Cognee нет.
+
 ## 1.0.15
 
 - Опция `reset_vector_store`: разово удаляет векторные таблицы Cognee при
