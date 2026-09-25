@@ -29,6 +29,7 @@ RUN set -eu; \
     HOME=/data-seed python /tmp/install-ext.py > /opt/ext-install.log 2>&1 || true; \
     cat /opt/ext-install.log
 
+COPY reset-vectors.py /opt/reset-vectors.py
 COPY run.sh /run.sh
 RUN chmod +x /run.sh
 

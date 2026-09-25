@@ -106,6 +106,14 @@ if [ ! -f /data/.ladybug-json-installed ]; then
   fi
 fi
 
+# Разовый сброс векторных таблиц: нужен при смене модели эмбеддингов,
+# иначе Cognee пишет вектор новой длины в таблицу со старой размерностью.
+if bashio::config.true 'reset_vector_store'; then
+  bashio::log.warning "reset_vector_store включён — удаляю векторные таблицы Cognee"
+  python /opt/reset-vectors.py || bashio::log.error "сброс не удался"
+  bashio::log.warning "выключи reset_vector_store, иначе таблицы будут сноситься при каждом старте"
+fi
+
 bashio::log.info "Cognee: база ${DB_NAME}@${DB_HOST}:${DB_PORT}, вектора в pgvector"
 bashio::log.info "Модели: ${LLM_MODEL} через ${LLM_ENDPOINT}, эмбеддинги ${EMBEDDING_MODEL}"
 
