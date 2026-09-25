@@ -1,5 +1,5 @@
 name: Cognee
-version: "1.0.13"
+version: "1.0.14"
 slug: cognee
 description: Память агентов на графе знаний (Cognee MCP), общая для всех машин
 url: https://github.com/topoteretes/cognee
@@ -30,8 +30,8 @@ options:
   structured_output: instructor
   embedding_provider: ollama
   embedding_endpoint: http://192.168.1.74:11434/api/embed
-  embedding_model: nomic-embed-text:latest
-  embedding_dimensions: 768
+  embedding_model: bge-m3:latest
+  embedding_dimensions: 1024
   dataset_isolation: false
   allowed_hosts: "*"
   log_level: ERROR
