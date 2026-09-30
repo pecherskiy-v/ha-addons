@@ -1,8 +1,15 @@
-ARG BUILD_FROM=ghcr.io/home-assistant/amd64-base-nodejs:24
+ARG BUILD_FROM=ghcr.io/home-assistant/amd64-base:latest
 FROM ${BUILD_FROM}
 
-# Доустанавливаем только гигабайтные утилиты, если они нужны
-RUN apk add --no-cache git jq
+# Установка Node.js 24 через Alpine Edge репозитории
+RUN apk add --no-cache \
+    git \
+    jq \
+    curl \
+    --repository=https://dl-cdn.alpinelinux.org/alpine/edge/main \
+    --repository=https://dl-cdn.alpinelinux.org/alpine/edge/community \
+    nodejs \
+    npm
 
 # Установка Paperclip
 RUN npm install -g paperclipai@latest
