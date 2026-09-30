@@ -1,12 +1,12 @@
-name: "Paperclip AI Orchestrator"
-description: "Оркестратор AI-агентов Paperclip с поддержкой двух Ollama и генератора картинок"
+name: Paperclip AI Orchestrator
+description: Оркестратор AI-агентов Paperclip с поддержкой двух Ollama и генератора картинок
 version: "1.1.0"
-slug: "paperclip"
+slug: paperclip
 init: false
 arch:
   - amd64
   - aarch64
-url: "https://github.com/pecherskiy-v/ha-addons/tree/main/paperclip"
+url: https://github.com/pecherskiy-v/ha-addons/tree/main/paperclip
 startup: application
 boot: auto
 
