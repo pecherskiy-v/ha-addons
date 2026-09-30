@@ -1,26 +1,22 @@
-name: Paperclip AI Orchestrator
+name: Paperclip AI
 description: Оркестратор AI-агентов Paperclip с поддержкой двух Ollama и генератора картинок
-version: "1.1.7"
+version: "1.2.1"
 slug: paperclip
 init: false
 arch:
   - amd64
   - aarch64
-url: https://github.com/pecherskiy-v/ha-addons/tree/main/paperclip
-startup: application
-boot: auto
-
-ingress: true
-ingress_port: 3000
-panel_icon: "mdi:robot"
-panel_title: "Paperclip AI"
-
+ports:
+  3000/tcp: 3000
+ports_description:
+  3000/tcp: "Paperclip Web UI and API"
 options:
   fast_ollama_url: "http://192.168.1.74:11434"
   smart_ollama_url: "http://192.168.1.120:11434"
   image_gen_url: "http://192.168.1.120:8188"
-
+  run_onboarding: false
 schema:
   fast_ollama_url: str
   smart_ollama_url: str
   image_gen_url: str
+  run_onboarding: bool
