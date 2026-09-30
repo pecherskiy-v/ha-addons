@@ -1,6 +1,6 @@
 name: Paperclip AI
 description: Оркестратор AI-агентов Paperclip с поддержкой двух Ollama и генератора картинок
-version: "1.2.5"
+version: "1.2.6"
 slug: paperclip
 init: false
 arch:
@@ -28,3 +28,6 @@ schema:
   smart_ollama_url: str
   image_gen_url: str
   run_onboarding: bool
+  paperclip_auth_disable_sign_up: bool
+  paperclip_allowed_hostnames: str
+
