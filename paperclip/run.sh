@@ -15,5 +15,5 @@ bashio::log.info "Fast Ollama (Win 4060): ${OLLAMA_BASE_URL}"
 bashio::log.info "Smart Ollama (Mac M5 Pro): ${SMART_OLLAMA_BASE_URL}"
 bashio::log.info "Image Gen (Mac M5 Pro): ${IMAGE_GEN_URL}"
 
-# Прямой запуск CLI без несуществующей команды 'start'
-exec paperclipai --port 3000 --host 0.0.0.0
+# Запуск Paperclip (настройки порта и хоста подтягиваются из экспортированных PORT и HOST)
+exec paperclipai
