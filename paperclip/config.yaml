@@ -1,21 +1,27 @@
 name: Paperclip AI
 description: Оркестратор AI-агентов Paperclip с поддержкой двух Ollama и генератора картинок
-version: "1.2.1"
+version: "1.2.3"
 slug: paperclip
 init: false
 arch:
   - amd64
   - aarch64
+ingress: true
+ingress_port: 3000
+panel_title: "Paperclip AI"
+panel_icon: "mdi:robot-paperclip"
 ports:
   3000/tcp: 3000
 ports_description:
   3000/tcp: "Paperclip Web UI and API"
 options:
+  database_url: "postgresql://postgres:password@192.168.1.X:5432/paperclip"
   fast_ollama_url: "http://192.168.1.74:11434"
   smart_ollama_url: "http://192.168.1.120:11434"
   image_gen_url: "http://192.168.1.120:8188"
   run_onboarding: false
 schema:
+  database_url: str
   fast_ollama_url: str
   smart_ollama_url: str
   image_gen_url: str
