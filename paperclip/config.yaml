@@ -1,6 +1,6 @@
 name: Paperclip AI
 description: Оркестратор AI-агентов Paperclip с поддержкой двух Ollama и генератора картинок
-version: "1.2.3"
+version: "1.2.5"
 slug: paperclip
 init: false
 arch:
@@ -10,6 +10,8 @@ ingress: true
 ingress_port: 3000
 panel_title: "Paperclip AI"
 panel_icon: "mdi:robot-paperclip"
+map:
+  - data:rw
 ports:
   3000/tcp: 3000
 ports_description:
