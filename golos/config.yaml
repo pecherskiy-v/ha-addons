@@ -1,0 +1,45 @@
+name: Golos
+description: Озвучка текста на колонках через Music Assistant (Silero на ПК), с возвратом музыки
+version: "1.0.0"
+slug: golos
+init: false
+arch:
+  - amd64
+  - aarch64
+startup: application
+boot: auto
+watchdog: "http://[HOST]:[PORT:8790]/health"
+ports:
+  8790/tcp: 8790
+ports_description:
+  8790/tcp: "API: POST /say, GET /rooms, GET /health"
+options:
+  ma_token: ""
+  ma_ws: "http://172.30.32.1:8094/ws"
+  public_url: "http://192.168.4.220:8790"
+  wyoming_host: "192.168.1.74"
+  wyoming_port: 10203
+  voice: "xenia"
+  quiet_from: 22
+  quiet_to: 10
+  rooms:
+    - name: max
+      player_id: ys_XK00000000000000547400002f7cd500
+    - name: gostinaya
+      player_id: ys_XK00000000000000547400002f7cd500
+    - name: maxz
+      player_id: ys_X10MJH00076DNK
+    - name: spalnya
+      player_id: ys_54007904c52058200490
+schema:
+  ma_token: password
+  ma_ws: url
+  public_url: url
+  wyoming_host: str
+  wyoming_port: port
+  voice: str
+  quiet_from: int(0,23)
+  quiet_to: int(0,23)
+  rooms:
+    - name: str
+      player_id: str

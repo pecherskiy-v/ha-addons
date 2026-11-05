@@ -7,6 +7,7 @@
 | Аддон | Описание | Статус |
 | :--- | :--- | :--- |
 | **Paperclip AI Orchestrator** | Оркестратор AI-агентов с поддержкой Ollama (Windows/Mac) и ComfyUI/SD | Ready |
+| **Golos** | Озвучка текста на колонках через Music Assistant с возвратом музыки | Ready |
 
 ---
 
