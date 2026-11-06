@@ -136,6 +136,23 @@ class MA:
                 return m
 
 
+async def revive(ma, player, p):
+    """Плеер недоступен: перезагрузить его провайдер в MA и дождаться плеера.
+
+    После сбоя сети хоста провайдер yandex_station сам к станциям не
+    переподключается, хотя они в сети (06.11); reload провайдера лечит за секунды.
+    """
+    provider = p.get("provider") or "yandex_station"
+    log.warning("плеер %s недоступен — перезагружаю провайдер %s", player, provider)
+    await ma.cmd("config/providers/reload", instance_id=provider)
+    for _ in range(15):
+        await asyncio.sleep(2)
+        p = (await ma.cmd("players/get", player_id=player)).get("result") or {}
+        if p.get("available"):
+            return p
+    raise RuntimeError(f"плеер {player} недоступен и после перезагрузки {provider}")
+
+
 async def say(text, player):
     wav, seconds = await synthesize(text)
     aid = uuid.uuid4().hex
@@ -143,6 +160,8 @@ async def say(text, player):
     url = f"{PUBLIC}/audio/{aid}.wav"
     async with MA() as ma:
         p = (await ma.cmd("players/get", player_id=player)).get("result") or {}
+        if not p.get("available", True):
+            p = await revive(ma, player, p)
         queue_id = p.get("active_source") or player
         q = (await ma.cmd("player_queues/get", queue_id=queue_id)).get("result") or {}
         music = q.get("state") == "playing"
@@ -157,6 +176,10 @@ async def say(text, player):
             await asyncio.sleep(1.5)
         r = await ma.cmd("players/cmd/play_announcement", player_id=player, url=url,
                          use_pre_announce=False)
+        if r.get("error_code") == 10:  # The player is not available
+            await revive(ma, player, p)
+            r = await ma.cmd("players/cmd/play_announcement", player_id=player, url=url,
+                             use_pre_announce=False)
         if r.get("error_code"):
             raise RuntimeError(f"MA: {r}")
         if not music:

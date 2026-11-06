@@ -1,6 +1,6 @@
 name: Golos
 description: Озвучка текста на колонках через Music Assistant (Silero на ПК), с возвратом музыки
-version: "1.0.0"
+version: "1.0.1"
 slug: golos
 init: false
 arch:
